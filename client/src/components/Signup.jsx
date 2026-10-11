@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Signup() {
+function Signup({ onSignupSuccess }) {
     // local state for form firels and feedback messages
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -46,6 +46,10 @@ function Signup() {
                 setLastName("");
                 setUsername("");
                 setPassword("");
+
+                if (onSignupSuccess) {
+                    await onSignupSuccess();
+                }
             }
         } catch (error) {
             console.error("Signup request failed:", error);
