@@ -3,11 +3,16 @@ import { useState } from "react";
 const API_URL = "http://localhost:9000";
 
 function CreateProject({ users, onProjectCreated }) {
+    // store each controlled project-form value
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    // planning is the initial permitted status
     const [status, setStatus] = useState("Planning");
+    // this holds the selected user's MongoDB ID,
+    // not the person's displayed name
     const [projectLeadId, setProjectLeadId] = useState("");
     const [message, setMessage] = useState("");
+    // used to disable the button during the request
     const [submitting, setSubmitting] = useState(false);
 
     async function handleSubmit(event) {
@@ -38,6 +43,7 @@ function CreateProject({ users, onProjectCreated }) {
                         name: name.trim(),
                         description: description.trim(),
                         status,
+                        // send the selected user's ID
                         project_lead_id: projectLeadId
                     })
                 }
@@ -47,17 +53,21 @@ function CreateProject({ users, onProjectCreated }) {
             setMessage(data.message);
 
             if (response.ok) {
+                // reset the form after creation
                 setName("");
                 setDescription("");
                 setStatus("Planning");
                 setProjectLeadId("");
 
+                // ask App to refresh the project list and select
+                // the newly created project
                 await onProjectCreated(data.projectId);
             }
         } catch (error) {
             console.error("Create project request failed:", error);
             setMessage("Could not connect to the server.");
         } finally {
+            // this runs after either success or failure
             setSubmitting(false);
         }
     }

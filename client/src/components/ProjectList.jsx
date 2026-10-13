@@ -4,6 +4,8 @@ function ProjectList({
     selectedProjectId,
     onSelectProject
 }) {
+    // a Project stores a lead ID, so this function finds the
+    // corresponding readable user record.
     function findLead(projectLeadId) {
         return users.find(
             (user) =>

@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 function Login() {
-    // local state for login fields and feedback
+    // store the 2 controlled Login inputs
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    // store feedback from the server
     const [message, setMessage] = useState("");
 
     async function handleSubmit(event) {
+        // keep React in control of form submission
         event.preventDefault(); // prevent page reload
         setMessage("");   // clear previous messages
 
@@ -32,7 +34,7 @@ function Login() {
             const data = await response.json();
             setMessage(data.message); // display server response
 
-            // clear fields on successful login
+            // clear fields only on successful authentication
             if (response.ok) {
                 setUsername("");
                 setPassword("");
