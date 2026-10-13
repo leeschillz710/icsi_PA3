@@ -357,7 +357,7 @@ projects._id
 projectMemberships.project_id
 ```
 
-```text
+```
 users._id
     =
 projectMemberships.user_id
